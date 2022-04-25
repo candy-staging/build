@@ -1,5 +1,17 @@
 # Put some miscellaneous rules here
 
+# Build system colors
+
+ifneq ($(BUILD_WITH_COLORS),0)
+  CL_RED="\033[31m"
+  CL_GRN="\033[32m"
+  CL_YLW="\033[33m"
+  CL_BLU="\033[34m"
+  CL_MAG="\033[35m"
+  CL_CYN="\033[36m"
+  CL_RST="\033[0m"
+endif
+
 # HACK: clear LOCAL_PATH from including last build target before calling
 # intermedites-dir-for
 LOCAL_PATH := $(BUILD_SYSTEM)
@@ -5383,14 +5395,35 @@ $(INTERNAL_OTA_PACKAGE_TARGET): $(BUILT_TARGET_FILES_PACKAGE) $(OTA_FROM_TARGET_
 	@echo "Package OTA: $@"
 	$(call build-ota-package-target,$@,-k $(KEY_CERT_PAIR) --output_metadata_path $(INTERNAL_OTA_METADATA))
 
-CANDY_TARGET_PACKAGE := $(PRODUCT_OUT)/$(CANDY_VERSION).zip
+TARGET_PACKAGE := $(PRODUCT_OUT)/$(CANDY_VERSION).zip
+SHA256 := prebuilts/build-tools/path/$(HOST_PREBUILT_TAG)/sha256sum
 
-.PHONY: otapackage bacon
+.PHONY: otapackage candy
 otapackage: $(INTERNAL_OTA_PACKAGE_TARGET)
-bacon: otapackage
-	$(hide) ln -f $(INTERNAL_OTA_PACKAGE_TARGET) $(CANDY_TARGET_PACKAGE)
-	$(hide) $(MD5SUM) $(CANDY_TARGET_PACKAGE) > $(CANDY_TARGET_PACKAGE).md5sum
-	@echo "**Package complete"**: $(CANDY_TARGET_PACKAGE)"
+candy: otapackage
+	$(hide) ln -f $(INTERNAL_OTA_PACKAGE_TARGET) $(TARGET_PACKAGE)
+	$(hide) $(SHA256) $(TARGET_PACKAGE) > $(TARGET_PACKAGE).sha256sum
+	@echo ""
+	@echo -e  ${CL_YLW}"*"${CL_BLU}"C"${CL_RED}"a"${CL_YLW}"n"${CL_GRN}"d"${CL_BLU}"y"${CL_RED}"12"${CL_YLW}"*"${CL_BLU}"C"${CL_RED}"a"${CL_YLW}"n"${CL_GRN}"d"${CL_BLU}"y"${CL_RED}"12"${CL_YLW}"*"${CL_BLU}"C"${CL_RED}"a"${CL_YLW}"n"${CL_GRN}"d"${CL_BLU}"y"${CL_RED}"12"${CL_YLW}"*"${CL_BLU}"C"${CL_RED}"a"${CL_YLW}"n"${CL_GRN}"d"${CL_BLU}"y"${CL_RED}"12"${CL_YLW}"*"${CL_BLU}"C"${CL_RED}"a"${CL_YLW}"n"${CL_GRN}"d"${CL_BLU}"y"${CL_RED}"12"${CL_YLW}"*"${CL_BLU}"C"${CL_RED}"a"${CL_YLW}"n"${CL_GRN}"d"${CL_BLU}"y"${CL_RED}"12"${CL_YLW}"*"${CL_BLU}"C"${CL_RED}"a"${CL_YLW}"n"${CL_GRN}"d"${CL_BLU}"y"${CL_RED}"12"${CL_YLW}"*"${CL_BLU}"C"${CL_RED}"a"${CL_YLW}"n"${CL_GRN}"d"${CL_BLU}"y"${CL_RED}"12"${CL_YLW}"*"${CL_BLU}"C"${CL_RED}"a"${CL_YLW}"n"${CL_GRN}"d"${CL_BLU}"y"${CL_RED}"12"${CL_YLW}"*"${CL_BLU}"C"${CL_RED}"a"${CL_YLW}"n"${CL_GRN}"d"${CL_BLU}"y"${CL_RED}"12"${CL_YLW}"*"${CL_RST}
+	@echo ""
+	@echo -e ${CL_BLU}"   ██████╗"${CL_RED}" █████╗ "${CL_YLW}"███╗   ██╗"${CL_GRN}"██████╗ "${CL_BLU}"██╗   ██╗"${CL_RED}"███████╗ "${CL_YLW}" █████╗ "${CL_GRN}"███╗  ███╗"${CL_BLU}" ██████╗ "${CL_RST}
+	@echo -e ${CL_BLU}"  ██╔════╝"${CL_RED}"██╔══██╗"${CL_YLW}"████╗  ██║"${CL_GRN}"██╔══██╗"${CL_BLU}"╚██╗ ██╔╝"${CL_RED}"██╔═══██╗"${CL_YLW}"██╔══██╗"${CL_GRN}"████╗████║"${CL_BLU}"██╔════╝ "${CL_RST}
+	@echo -e ${CL_BLU}"  ██║     "${CL_RED}"███████║"${CL_YLW}"██╔██╗ ██║"${CL_GRN}"██║  ██║"${CL_BLU}" ╚═██╔═╝ "${CL_RED}"███████╔╝"${CL_YLW}"██║  ██║"${CL_GRN}"██╔███╝██║"${CL_BLU}"╚██████╗ "${CL_RST}
+	@echo -e ${CL_BLU}"  ██║     "${CL_RED}"██╔══██║"${CL_YLW}"██║╚██╗██║"${CL_GRN}"██║  ██║"${CL_BLU}"   ██║   "${CL_RED}"██╔══██║ "${CL_YLW}"██║  ██║"${CL_GRN}"██║╚═╝ ██║"${CL_BLU}" ╚════██║"${CL_RST}
+	@echo -e ${CL_BLU}"  ╚██████╗"${CL_RED}"██║  ██║"${CL_YLW}"██║ ╚████║"${CL_GRN}"██████╔╝"${CL_BLU}"   ██║   "${CL_RED}"██║  ╚██╗"${CL_YLW}"╚█████╔╝"${CL_GRN}"██║    ██║"${CL_BLU}" ██████╔╝"${CL_RST}
+	@echo -e ${CL_BLU}"   ╚═════╝"${CL_RED}"╚═╝  ╚═╝"${CL_YLW}"╚═╝  ╚═══╝"${CL_GRN}"╚═════╝ "${CL_BLU}"   ╚═╝   "${CL_RED}"╚═╝   ╚═╝"${CL_YLW}" ╚════╝ "${CL_GRN}"╚═╝    ╚═╝"${CL_BLU}" ╚═════╝ "${CL_RST}
+	@echo ""
+	@echo -e ${CL_YLW}"                  ~~~ "${CL_GRN}"Build complete! "${CL_YLW}"Taste "${CL_GRN}"the "${CL_BLU}"S"${CL_RED}"w"${CL_YLW}"e"${CL_GRN}"e"${CL_BLU}"t"${CL_RED}"n"${CL_YLW}"e"${CL_GRN}"s"$(CL_BLU)"s"${CL_RED}"!"${CL_YLW}"™  ~~~                 "${CL_RST}
+	@echo ""
+	echo -e ${CL_BLD}${CL_RED}"===============================-Package complete-==============================="${CL_RED}
+	echo -e ${CL_BLD}${CL_GRN}"Zip: "${CL_RED} $(TARGET_PACKAGE)${CL_RST}
+	echo -e ${CL_BLD}${CL_GRN}"SHA256: "${CL_RED}" `cat $(TARGET_PACKAGE).sha256sum | awk '{print $$1}' `"${CL_RST}
+	echo -e ${CL_BLD}${CL_GRN}"Size:"${CL_RED}" `du -sh $(TARGET_PACKAGE) | awk '{print $$1}' `"${CL_RST}
+	echo -e ${CL_BLD}${CL_GRN}"TimeStamp:"${CL_RED}" `cat $(PRODUCT_OUT)/system/build.prop | grep ro.build.date.utc | cut -d'=' -f2 | awk '{print $$1}' `"${CL_RST}
+	echo -e ${CL_BLD}${CL_GRN}"Integer Value:"${CL_RED}" `wc -c $(TARGET_PACKAGE) | awk '{print $$1}' `"${CL_RST}
+	echo -e ${CL_BLD}${CL_RED}"================================================================================"${CL_RED}
+        @echo -e  ${CL_YLW}"*"${CL_BLU}"C"${CL_RED}"a"${CL_YLW}"n"${CL_GRN}"d"${CL_BLU}"y"${CL_RED}"12"${CL_YLW}"*"${CL_BLU}"C"${CL_RED}"a"${CL_YLW}"n"${CL_GRN}"d"${CL_BLU}"y"${CL_RED}"12"${CL_YLW}"*"${CL_BLU}"C"${CL_RED}"a"${CL_YLW}"n"${CL_GRN}"d"${CL_BLU}"y"${CL_RED}"12"${CL_YLW}"*"${CL_BLU}"C"${CL_RED}"a"${CL_YLW}"n"${CL_GRN}"d"${CL_BLU}"y"${CL_RED}"12"${CL_YLW}"*"${CL_BLU}"C"${CL_RED}"a"${CL_YLW}"n"${CL_GRN}"d"${CL_BLU}"y"${CL_RED}"12"${CL_YLW}"*"${CL_BLU}"C"${CL_RED}"a"${CL_YLW}"n"${CL_GRN}"d"${CL_BLU}"y"${CL_RED}"12"${CL_YLW}"*"${CL_BLU}"C"${CL_RED}"a"${CL_YLW}"n"${CL_GRN}"d"${CL_BLU}"y"${CL_RED}"12"${CL_YLW}"*"${CL_BLU}"C"${CL_RED}"a"${CL_YLW}"n"${CL_GRN}"d"${CL_BLU}"y"${CL_RED}"12"${CL_YLW}"*"${CL_BLU}"C"${CL_RED}"a"${CL_YLW}"n"${CL_GRN}"d"${CL_BLU}"y"${CL_RED}"12"${CL_YLW}"*"${CL_BLU}"C"${CL_RED}"a"${CL_YLW}"n"${CL_GRN}"d"${CL_BLU}"y"${CL_RED}"12"${CL_YLW}"*"${CL_RST}
+	echo -e ${CL_BLD}${CL_RED}"================================================================================"${CL_RED}
 
 ifeq ($(BOARD_BUILD_RETROFIT_DYNAMIC_PARTITIONS_OTA_PACKAGE),true)
 name := $(product_name)-ota-retrofit-$(FILE_NAME_TAG)
