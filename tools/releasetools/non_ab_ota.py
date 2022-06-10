@@ -220,7 +220,7 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
   # Dump fingerprints
   script.Print("Target: {}".format(target_info.fingerprint))
 
-  build_id = target_info.GetBuildProp("ro.display.version")
+  build_id = target_info.GetBuildProp("ro.candy.display.version")
   build_day = target_info.GetBuildProp("ro.build.date")
   security_patch = target_info.GetBuildProp("ro.build.version.security_patch")
   device = target_info.GetBuildProp("ro.product.device")
@@ -233,7 +233,6 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
   script.Print(" _/        _/    _/  _/    _/  _/    _/  _/    _/   ");
   script.Print("  _/_/_/    _/_/_/  _/    _/    _/_/_/    _/_/_/    ");
   script.Print("                                             _/     ");
-  script.Print("               --- Alpha ---                ");
   script.Print("--------------------------------------------");
   script.Print(" OS version       : %s"%(build_id));
   script.Print("");

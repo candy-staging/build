@@ -5437,9 +5437,6 @@ candy: otapackage
 	echo -e ${CL_BLD}${CL_GRN}"TimeStamp:"${CL_RED}" `cat $(PRODUCT_OUT)/system/build.prop | grep ro.build.date.utc | cut -d'=' -f2 | awk '{print $$1}' `"${CL_RST}
 	echo -e ${CL_BLD}${CL_GRN}"Integer Value:"${CL_RED}" `wc -c $(TARGET_PACKAGE) | awk '{print $$1}' `"${CL_RST}
 	echo -e ${CL_BLD}${CL_RED}"================================================================================"${CL_RED}
-        @echo -e  ${CL_YLW}"*"${CL_BLU}"C"${CL_RED}"a"${CL_YLW}"n"${CL_GRN}"d"${CL_BLU}"y"${CL_RED}"12"${CL_YLW}"*"${CL_BLU}"C"${CL_RED}"a"${CL_YLW}"n"${CL_GRN}"d"${CL_BLU}"y"${CL_RED}"12"${CL_YLW}"*"${CL_BLU}"C"${CL_RED}"a"${CL_YLW}"n"${CL_GRN}"d"${CL_BLU}"y"${CL_RED}"12"${CL_YLW}"*"${CL_BLU}"C"${CL_RED}"a"${CL_YLW}"n"${CL_GRN}"d"${CL_BLU}"y"${CL_RED}"12"${CL_YLW}"*"${CL_BLU}"C"${CL_RED}"a"${CL_YLW}"n"${CL_GRN}"d"${CL_BLU}"y"${CL_RED}"12"${CL_YLW}"*"${CL_BLU}"C"${CL_RED}"a"${CL_YLW}"n"${CL_GRN}"d"${CL_BLU}"y"${CL_RED}"12"${CL_YLW}"*"${CL_BLU}"C"${CL_RED}"a"${CL_YLW}"n"${CL_GRN}"d"${CL_BLU}"y"${CL_RED}"12"${CL_YLW}"*"${CL_BLU}"C"${CL_RED}"a"${CL_YLW}"n"${CL_GRN}"d"${CL_BLU}"y"${CL_RED}"12"${CL_YLW}"*"${CL_BLU}"C"${CL_RED}"a"${CL_YLW}"n"${CL_GRN}"d"${CL_BLU}"y"${CL_RED}"12"${CL_YLW}"*"${CL_BLU}"C"${CL_RED}"a"${CL_YLW}"n"${CL_GRN}"d"${CL_BLU}"y"${CL_RED}"12"${CL_YLW}"*"${CL_RST}
-	echo -e ${CL_BLD}${CL_RED}"================================================================================"${CL_RED}
-
 ifeq ($(BOARD_BUILD_RETROFIT_DYNAMIC_PARTITIONS_OTA_PACKAGE),true)
 name := $(product_name)-ota-retrofit-$(FILE_NAME_TAG)
 
